@@ -1,0 +1,8 @@
+/Users/giovanasantannadeassis/Desktop/Treinamentos/gFit/gFit/obj/Debug/net7.0/gFit.csproj.AssemblyReference.cache
+/Users/giovanasantannadeassis/Desktop/Treinamentos/gFit/gFit/obj/Debug/net7.0/gFit.GeneratedMSBuildEditorConfig.editorconfig
+/Users/giovanasantannadeassis/Desktop/Treinamentos/gFit/gFit/obj/Debug/net7.0/gFit.AssemblyInfoInputs.cache
+/Users/giovanasantannadeassis/Desktop/Treinamentos/gFit/gFit/obj/Debug/net7.0/gFit.AssemblyInfo.cs
+/Users/giovanasantannadeassis/Desktop/Treinamentos/gFit/gFit/obj/Debug/net7.0/gFit.csproj.CoreCompileInputs.cache
+/Users/giovanasantannadeassis/Desktop/Treinamentos/gFit/gFit/obj/Debug/net7.0/gFit.MvcApplicationPartsAssemblyInfo.cache
+/Users/giovanasantannadeassis/Desktop/Treinamentos/gFit/gFit/obj/Debug/net7.0/gFit.RazorAssemblyInfo.cache
+/Users/giovanasantannadeassis/Desktop/Treinamentos/gFit/gFit/obj/Debug/net7.0/gFit.RazorAssemblyInfo.cs
