@@ -1,10 +1,14 @@
-﻿namespace gFit.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace gFit.Models
 {
 	public class TrainingSeries
 	{
         public Guid Id { get; set; }
-        public int UserId { get; set; }
-        public int PersonalId { get; set; }
+        [ForeignKey("UserId")]
+        public Guid UserId { get; set; }
+        [ForeignKey("PersonalId")]
+        public Guid PersonalId { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
         public int Series { get; set; }

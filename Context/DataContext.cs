@@ -46,7 +46,5 @@ namespace gFit.Context
 
             base.OnModelCreating(modelBuilder);
         }
-    }
-
-    
+    } 
 }

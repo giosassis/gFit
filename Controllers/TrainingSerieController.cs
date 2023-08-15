@@ -24,7 +24,7 @@ namespace gFit.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetTrainingSeriesById(int id)
+        public async Task<IActionResult> GetTrainingSeriesById(Guid id)
         {
             var trainingSeries = await _trainingSeriesService.GetTrainingSeriesByIdAsync(id);
 

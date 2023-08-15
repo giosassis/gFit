@@ -1,20 +1,99 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.EntityFrameworkCore;
+using gFit.Repositories;
+using gFit.Services;
+using gFit.Context;
+using Microsoft.OpenApi.Models;
+using gFit.Repositories.Implementation;
+using gFit.Repositories.Interface;
+using gFit.Services.Implementation;
+using gFit.Services.Interface;
+using gFit.Services.Interfaces;
 
-namespace gFit
+var builder = WebApplication.CreateBuilder(args);
+
+// Database Config
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddControllersWithViews();
+
+// AutoMapper Config
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// Dependecy Injection Service and Repository
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IAddressService, AddressService>();
+
+builder.Services.AddScoped<IExerciseCategoryRepository, ExerciseCategoryRepository>();
+builder.Services.AddScoped<IExerciseCategoryService, ExerciseCategoryService>();
+
+builder.Services.AddScoped<IExerciseImageRepository, ExerciseImageRepository>();
+builder.Services.AddScoped<IExerciseImageService, ExerciseImageService>();
+
+builder.Services.AddScoped<IMuscleRepository, MuscleRepository>();
+builder.Services.AddScoped<IMuscleService, MuscleService>();
+
+builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+
+builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
+builder.Services.AddScoped<IExerciseService, ExerciseService>();
+
+builder.Services.AddScoped<ITrainingSeriesRepository, TrainingSeriesRepository>();
+builder.Services.AddScoped<ITrainingSeriesService, TrainingSeriesService>();
+
+// Swagger Config 
+builder.Services.AddSwaggerGen(c =>
 {
-    public class Program
+    c.SwaggerDoc("v1", new OpenApiInfo
     {
-        public static void Main(string[] args)
+        Title = "gFit",
+        Version = "v1",
+        Description = "An API for gym.",
+        Contact = new OpenApiContact
         {
-            CreateHostBuilder(args).Build().Run();
+            Name = "Giovana Assis",
+            Email = "giovana.sant@hotmail.com"
         }
+    });
+});
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+// Configuração da pipeline de requisição
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage(); // UseDeveloperExceptionPage() no ASP.NET 7
 }
+else
+{
+    // Configurações para ambiente de produção
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API Name");
+});
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+
+app.Run();

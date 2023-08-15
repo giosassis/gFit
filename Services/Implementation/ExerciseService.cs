@@ -67,7 +67,7 @@ namespace gFit.Services.Implementation
             await _exerciseRepository.DeleteExerciseAsync(id);
         }
 
-        public async Task AddExerciseToTrainingSeriesAsync(int trainingSeriesId, ExerciseDto exerciseDto, int repetitions, int sets, float restInterval)
+        public async Task AddExerciseToTrainingSeriesAsync(Guid trainingSeriesId, ExerciseDto exerciseDto, int repetitions, int sets, float restInterval)
         {
             var trainingSeries = await _trainingSeriesRepository.GetTrainingSeriesByIdAsync(trainingSeriesId);
 

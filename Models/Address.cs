@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace gFit.Models
 {
 	public class Address
@@ -11,6 +13,9 @@ namespace gFit.Models
         public string? HouseNumber { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        [ForeignKey("UserId")]
+        public Guid UserId { get; set; }
+        public User? User { get; set; }
     }
 }
 

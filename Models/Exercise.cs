@@ -1,13 +1,19 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace gFit.Models
 {
 	public class Exercise
 	{
         public Guid Id { get; set; }
-        public int ExerciseImageId { get; set; }
-        public int ExerciseCategoryId { get; set; }
-        public int MuscleId { get; set; }
-        public int EquipmentId { get; set; }
+        [ForeignKey("ExerciseImageId")]
+        public Guid ExerciseImageId { get; set; }
+        [ForeignKey("ExerciseCategoryId")]
+        public Guid ExerciseCategoryId { get; set; }
+        [ForeignKey("MuscleId")]
+        public Guid MuscleId { get; set; }
+        [ForeignKey("EquipmentId")]
+        public Guid EquipmentId { get; set; }
         public string? Name { get; set; }
         public int Repetitions { get; set; }  
         public int Sets { get; set; } 

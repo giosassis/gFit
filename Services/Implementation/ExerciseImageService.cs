@@ -23,7 +23,7 @@ namespace gFit.Services.Implementation
             return _mapper.Map<IEnumerable<ExerciseImageReadDTO>>(exerciseImages);
         }
 
-        public async Task<ExerciseImageReadDTO> GetEquipmentImageByIdAsync(int id)
+        public async Task<ExerciseImageReadDTO> GetEquipmentImageByIdAsync(Guid id)
         {
             var exerciseImage = await _exerciseImageRepository.GetExerciseImageByIdAsync(id);
             return _mapper.Map<ExerciseImageReadDTO>(exerciseImage);
@@ -36,7 +36,7 @@ namespace gFit.Services.Implementation
             return _mapper.Map<ExerciseImageReadDTO>(createdExerciseImage);
         }
 
-        public async Task<ExerciseImageReadDTO> UpdateEquipmentImageAsync(int id, ExerciseImageUpdateDTO exerciseImageUpdateDTO)
+        public async Task<ExerciseImageReadDTO> UpdateEquipmentImageAsync(Guid id, ExerciseImageUpdateDTO exerciseImageUpdateDTO)
         {
             var existingExerciseImage = await _exerciseImageRepository.GetExerciseImageByIdAsync(id);
 
@@ -49,7 +49,7 @@ namespace gFit.Services.Implementation
             return _mapper.Map<ExerciseImageReadDTO>(updatedExerciseImage);
         }
 
-        public async Task DeleteExerciseImageAsync(int id)
+        public async Task DeleteExerciseImageAsync(Guid id)
         {
             var existingExerciseImage = await _exerciseImageRepository.GetExerciseImageByIdAsync(id);
 
