@@ -15,6 +15,13 @@ namespace gFit.Controllers
             _personalService = personalService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllTrainingSeries()
+        {
+            var personal = await _personalService.GetAllPersonalsAsync();
+            return Ok(personal);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPersonal(Guid id)
         {

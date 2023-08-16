@@ -32,6 +32,11 @@ namespace gFit.Services.Implementation
         public async Task<ExerciseCategoryReadDTO> CreateExerciseCategoryAsync(ExerciseCategoryCreateDTO exerciseCategoryCreateDTO)
         {
             var exerciseCategory = _mapper.Map<ExerciseCategory>(exerciseCategoryCreateDTO);
+
+            exerciseCategory.CreatedAt = DateTime.UtcNow;
+            exerciseCategory.UpdatedAt = DateTime.UtcNow;
+
+
             var createdExerciseCategory = await _exerciseCategoryRepository.CreateExerciseCategoryAsync(exerciseCategory);
             return _mapper.Map<ExerciseCategoryReadDTO>(createdExerciseCategory);
         }

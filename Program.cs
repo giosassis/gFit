@@ -40,6 +40,12 @@ builder.Services.AddScoped<IExerciseService, ExerciseService>();
 builder.Services.AddScoped<ITrainingSeriesRepository, TrainingSeriesRepository>();
 builder.Services.AddScoped<ITrainingSeriesService, TrainingSeriesService>();
 
+builder.Services.AddScoped<IPersonalRepository, PersonalRepository>();
+builder.Services.AddScoped<IPersonalService, PersonalService>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 // Swagger Config 
 builder.Services.AddSwaggerGen(c =>
 {

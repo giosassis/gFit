@@ -6,10 +6,10 @@ namespace gFit.Services.Interface
 {
     public interface IExerciseImageService
     {
-        Task<IEnumerable<ExerciseImageReadDTO>> GetAllEquipmentImageAsync();
-        Task<ExerciseImageReadDTO> GetEquipmentImageByIdAsync(Guid id);
-        Task<ExerciseImageReadDTO> CreateEquipmentImageAsync(ExerciseImageCreateDTO equipmentDTO);
-        Task<ExerciseImageReadDTO> UpdateEquipmentImageAsync(Guid id, ExerciseImageUpdateDTO equipmentDTO);
+        Task<IEnumerable<ExerciseImageReadDTO>> GetAllExerciseImageAsync();
+        Task<ExerciseImageReadDTO> GetExerciseImageByIdAsync(Guid id);
+        Task<ExerciseImageReadDTO> CreateExerciseImageAsync(ExerciseImageCreateDTO equipmentDTO);
+        Task<ExerciseImageReadDTO> UpdateExerciseImageAsync(Guid id, ExerciseImageUpdateDTO equipmentDTO);
         Task DeleteExerciseImageAsync(Guid id);
     }
 }

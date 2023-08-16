@@ -5,7 +5,7 @@ namespace gFit.Context.DTOs
 	{
         public class TrainingSeriesReadDTO
         {
-            public int Id { get; set; }
+            public Guid Id { get; set; }
             public int UserId { get; set; }
             public int PersonalId { get; set; }
             public string? Name { get; set; }
@@ -20,8 +20,8 @@ namespace gFit.Context.DTOs
 
         public class TrainingSeriesCreateDTO
         {
-            public int UserId { get; set; }
-            public int PersonalId { get; set; }
+            public Guid UserId { get; set; }
+            public Guid PersonalId { get; set; }
             public string? Name { get; set; }
             public string? Description { get; set; }
             public int Series { get; set; }

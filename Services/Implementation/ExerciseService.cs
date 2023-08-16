@@ -36,6 +36,9 @@ namespace gFit.Services.Implementation
         {
             var exercise = _mapper.Map<Exercise>(exerciseCreateDTO);
 
+            exercise.CreatedAt = DateTime.UtcNow;
+            exercise.UpdatedAt = DateTime.UtcNow;
+
             var createdExercise = await _exerciseRepository.CreateExerciseAsync(exercise);
             return _mapper.Map<ExerciseReadDTO>(createdExercise);
         }

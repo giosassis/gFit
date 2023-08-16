@@ -15,6 +15,13 @@ namespace gFit.Controllers
             _muscleService = muscleService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllMuscles()
+        {
+            var trainingSeries = await _muscleService.GetAllMusclesAsync();
+            return Ok(trainingSeries);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMuscle(Guid id)
         {

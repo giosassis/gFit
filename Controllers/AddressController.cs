@@ -15,6 +15,13 @@ namespace gFit.Controllers
             _addressService = addressService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllTrainingSeries()
+        {
+            var address = await _addressService.GetAllAddressesAsync();
+            return Ok(address);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAddress(Guid id)
         {

@@ -6,6 +6,7 @@ using gFit.Services.Interfaces;
 using System.Security.Cryptography;
 using gFit.Validator;
 using static gFit.Context.DTOs.UserDto;
+using gFit.Context.DTOs;
 
 namespace gFit.Services.Implementation
 {
@@ -48,6 +49,9 @@ namespace gFit.Services.Implementation
 
             var user = _mapper.Map<User>(userCreateDTO);
             user.Password = hashedPassword;
+
+            user.CreatedAt = DateTime.UtcNow;
+            user.UpdatedAt = DateTime.UtcNow;
 
             var createdUser = await _userRepository.CreateUserAsync(user);
             return _mapper.Map<UserReadDTO>(createdUser);

@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace gFit.Models
+﻿namespace gFit.Models
 {
 	public class Address
 	{

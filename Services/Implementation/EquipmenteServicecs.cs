@@ -3,6 +3,7 @@ using gFit.Models;
 using gFit.Repositories.Interface;
 using gFit.Services.Interface;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using static gFit.Context.DTOs.EquipmentDto;
 
@@ -34,6 +35,10 @@ namespace gFit.Services.Implementation
         public async Task<EquipmentReadDTO> CreateEquipmentAsync(EquipmentCreateDTO equipmentCreateDTO)
         {
             var equipment = _mapper.Map<Equipment>(equipmentCreateDTO);
+
+            equipment.CreatedAt = DateTime.UtcNow;
+            equipment.UpdatedAt = DateTime.UtcNow;
+
             var createdEquipment = await _equipmentRepository.CreateEquipmentAsync(equipment);
             return _mapper.Map<EquipmentReadDTO>(createdEquipment);
         }

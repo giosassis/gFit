@@ -33,6 +33,9 @@ namespace gFit.Services.Implementation
         {
             var muscle = _mapper.Map<Muscle>(muscleCreateDTO);
 
+            muscle.CreatedAt = DateTime.UtcNow; 
+            muscle.UpdatedAt = DateTime.UtcNow;
+
             var createdMuscle = await _muscleRepository.CreateMuscleAsync(muscle);
             return _mapper.Map<MuscleReadDTO>(createdMuscle);
         }

@@ -2,12 +2,11 @@
 using AutoMapper;
 using gFit.Models;
 using gFit.Repositories.Interface;
-using gFit.Services.Interfaces;
 using System.Security.Cryptography;
 using gFit.Validator;
 using static gFit.Context.DTOs.PersonalDto;
 using gFit.Services.Interface;
-using static gFit.Context.DTOs.UserDto;
+
 
 namespace gFit.Services.Implementation
 {
@@ -50,6 +49,8 @@ namespace gFit.Services.Implementation
 
             var personal = _mapper.Map<Personal>(personalCreateDTO);
             personal.Password = hashedPassword;
+            personal.CreatedAt = DateTime.UtcNow;
+            personal.UpdatedAt = DateTime.UtcNow;
 
             var createdPersonal = await _personalRepository.CreatePersonalAsync(personal);
             return _mapper.Map<PersonalReadDTO>(createdPersonal);

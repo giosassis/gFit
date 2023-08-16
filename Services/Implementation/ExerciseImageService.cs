@@ -17,26 +17,31 @@ namespace gFit.Services.Implementation
             _exerciseImageRepository = exerciseImageRepository;
         }
 
-        public async Task<IEnumerable<ExerciseImageReadDTO>> GetAllEquipmentImageAsync()
+        public async Task<IEnumerable<ExerciseImageReadDTO>> GetAllExerciseImageAsync()
         {
             var exerciseImages = await _exerciseImageRepository.GetAllExerciseImagesAsync();
             return _mapper.Map<IEnumerable<ExerciseImageReadDTO>>(exerciseImages);
         }
 
-        public async Task<ExerciseImageReadDTO> GetEquipmentImageByIdAsync(Guid id)
+        public async Task<ExerciseImageReadDTO> GetExerciseImageByIdAsync(Guid id)
         {
             var exerciseImage = await _exerciseImageRepository.GetExerciseImageByIdAsync(id);
             return _mapper.Map<ExerciseImageReadDTO>(exerciseImage);
         }
 
-        public async Task<ExerciseImageReadDTO> CreateEquipmentImageAsync(ExerciseImageCreateDTO exerciseImageCreateDTO)
+        public async Task<ExerciseImageReadDTO> CreateExerciseImageAsync(ExerciseImageCreateDTO exerciseImageCreateDTO)
         {
             var exerciseImage = _mapper.Map<ExerciseImage>(exerciseImageCreateDTO);
+
+            exerciseImage.CreatedAt = DateTime.UtcNow;
+            exerciseImage.UpdatedAt = DateTime.UtcNow;
+
+
             var createdExerciseImage = await _exerciseImageRepository.CreateExerciseImageAsync(exerciseImage);
             return _mapper.Map<ExerciseImageReadDTO>(createdExerciseImage);
         }
 
-        public async Task<ExerciseImageReadDTO> UpdateEquipmentImageAsync(Guid id, ExerciseImageUpdateDTO exerciseImageUpdateDTO)
+        public async Task<ExerciseImageReadDTO> UpdateExerciseImageAsync(Guid id, ExerciseImageUpdateDTO exerciseImageUpdateDTO)
         {
             var existingExerciseImage = await _exerciseImageRepository.GetExerciseImageByIdAsync(id);
 

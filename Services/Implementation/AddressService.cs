@@ -32,7 +32,10 @@ namespace gFit.Services.Implementation
         public async Task<AddressReadDTO> CreateAddressAsync(AddressCreateDTO addressCreateDTO)
         {
             var address = _mapper.Map<Address>(addressCreateDTO);
-            
+
+            address.CreatedAt = DateTime.UtcNow;
+            address.UpdatedAt = DateTime.UtcNow;
+
             var createdAddress = await _addressRepository.CreateAddressAsync(address);
             return _mapper.Map<AddressReadDTO>(createdAddress);
         }

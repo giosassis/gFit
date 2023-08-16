@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using gFit.Services.Interface;
 using static gFit.Context.DTOs.EquipmentDto;
+using gFit.Services.Implementation;
 
 namespace gFit.Controllers
 {
@@ -13,6 +14,13 @@ namespace gFit.Controllers
         public EquipmentController(IEquipmentService equipmentService)
         {
             _equipmentService = equipmentService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllTrainingSeries()
+        {
+            var equipment = await _equipmentService.GetAllEquipmentAsync();
+            return Ok(equipment);
         }
 
         [HttpGet("{id}")]

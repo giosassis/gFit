@@ -35,6 +35,9 @@ namespace gFit.Services.Implementation
         {
             var trainingSeries = _mapper.Map<Models.TrainingSeries>(trainingSeriesCreateDTO);
 
+            trainingSeries.CreatedAt = DateTime.UtcNow;
+            trainingSeries.UpdatedAt = DateTime.UtcNow;
+
             var createdTrainingSeries = await _trainingSeriesRepository.CreateTrainingSeriesAsync(trainingSeries);
             return _mapper.Map<TrainingSeriesReadDTO>(createdTrainingSeries);
         }

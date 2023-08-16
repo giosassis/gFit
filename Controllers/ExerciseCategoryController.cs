@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using gFit.Services.Interface;
 using static gFit.Context.DTOs.ExerciseCategoryDto;
+using gFit.Services.Implementation;
 
 namespace gFit.Controllers
 {
@@ -13,6 +14,13 @@ namespace gFit.Controllers
         public ExerciseCategoryController(IExerciseCategoryService exerciseCategoryService)
         {
             _exerciseCategoryService = exerciseCategoryService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllTrainingSeries()
+        {
+            var exerciseCategory = await _exerciseCategoryService.GetAllExerciseCategoriesAsync();
+            return Ok(exerciseCategory);
         }
 
         [HttpGet("{id}")]
