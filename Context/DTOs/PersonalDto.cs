@@ -12,7 +12,7 @@ namespace gFit.Context.DTOs
             public string? Description { get; set; }
             public DateTime CreatedAt { get; set; }
             public DateTime UpdatedAt { get; set; }
-            public int AddressId { get; set; }
+            public Guid AddressId { get; set; }
         }
 
         public class PersonalCreateDTO
@@ -22,7 +22,7 @@ namespace gFit.Context.DTOs
             public string? Password { get; set; }
             public string? Cref { get; set; }
             public string? Description { get; set; }
-            public int AddressId { get; set; }
+            public Guid AddressId { get; set; }
         }
 
         public class PersonalUpdateDTO

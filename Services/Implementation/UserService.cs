@@ -25,6 +25,8 @@ namespace gFit.Services.Implementation
         {
             var users = await _userRepository.GetAllUsersAsync();
             return _mapper.Map<IEnumerable<UserReadDTO>>(users);
+
+            
         }
 
         public async Task<UserReadDTO> GetUserByIdAsync(Guid id)
@@ -52,7 +54,7 @@ namespace gFit.Services.Implementation
 
             user.CreatedAt = DateTime.UtcNow;
             user.UpdatedAt = DateTime.UtcNow;
-
+            user.Imc = CalculateImc(userCreateDTO.Weight, userCreateDTO.Height);
             var createdUser = await _userRepository.CreateUserAsync(user);
             return _mapper.Map<UserReadDTO>(createdUser);
         }
@@ -102,5 +104,9 @@ namespace gFit.Services.Implementation
             return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
         }
 
+        private static float CalculateImc(float weight, float height)
+        {
+            return weight / (height * height);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using gFit.Services.Interfaces;
 using static gFit.Context.DTOs.UserDto;
+using gFit.Services.Implementation;
 
 
 namespace gFit.Controllers
@@ -14,6 +15,13 @@ namespace gFit.Controllers
         public UserController(IUserService userService)
         {
             _userService = userService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllTrainingSeries()
+        {
+            var user = await _userService.GetAllUsersAsync();
+            return Ok(user);
         }
 
         [HttpGet("{id}")]
