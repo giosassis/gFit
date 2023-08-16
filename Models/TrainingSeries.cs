@@ -5,9 +5,7 @@ namespace gFit.Models
 	public class TrainingSeries
 	{
         public Guid Id { get; set; }
-        [ForeignKey("UserId")]
         public Guid UserId { get; set; }
-        [ForeignKey("PersonalId")]
         public Guid PersonalId { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
@@ -16,10 +14,10 @@ namespace gFit.Models
         public float? RestTime { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-
+        [ForeignKey("UserId")]
         public User? User { get; set; }
+        [ForeignKey("PersonalId")]
         public Personal? Personal { get; set; }
         public List<Exercise>? Exercises { get; set; }
     }
 }
-

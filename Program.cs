@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using gFit.Repositories;
-using gFit.Services;
 using gFit.Context;
 using Microsoft.OpenApi.Models;
 using gFit.Repositories.Implementation;

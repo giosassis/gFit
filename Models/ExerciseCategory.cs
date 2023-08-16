@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
 namespace gFit.Models
 {
 	public class ExerciseCategory
@@ -8,8 +9,6 @@ namespace gFit.Models
         public string? Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public ICollection<Exercise>? Exercises { get; set; }
-
     }
 }
 

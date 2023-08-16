@@ -1,24 +1,19 @@
-﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{8894F6E5-AFB1-4831-A786-D8E1B9D27BA0}|Default">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
+﻿<Properties StartupConfiguration="{8894F6E5-AFB1-4831-A786-D8E1B9D27BA0}|Default" GitUserInfo="UsingMD">
+  <MonoDevelop.Ide.ItemProperties.gFit PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Context/DataContext.cs">
     <Files>
-      <File FileName="Program.cs" Line="11" Column="30" />
-      <File FileName="gFit.csproj" Line="9" Column="14" />
-      <File FileName="Services/Implementation/ExerciseImageService.cs" Line="52" Column="56" />
-      <File FileName="Services/Implementation/TrainingSeriesService.cs" Line="69" Column="64" />
-      <File FileName="Controllers/TrainingSerieController.cs" Line="27" Column="68" />
-      <File FileName="Services/Implementation/ExerciseService.cs" Line="70" Column="64" />
-      <File FileName="appsettings.json" Line="1" Column="1" />
-      <File FileName="Properties/launchSettings.json" Line="1" Column="1" />
+      <File FileName="Context/DataContext.cs" Line="30" Column="43" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="gFit" expanded="True">
+          <Node name="gFit">
             <Node name="gFit">
-              <Node name="Properties">
-                <Node name="launchSettings.json" selected="True" />
+              <Node name="Context" expanded="True">
+                <Node name="DataContext.cs" selected="True" />
               </Node>
+              <Node name="Migrations" expanded="True" />
+              <Node name="Models" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -26,7 +21,9 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.gFit PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

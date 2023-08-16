@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Net;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace gFit.Models
 {
@@ -14,8 +12,8 @@ namespace gFit.Models
       public string? Description { get; set; }
       public DateTime CreatedAt { get; set; }
       public DateTime UpdatedAt { get; set; }
-      [ForeignKey("AddressId")]
       public Guid AddressId { get; set; }
+      [ForeignKey("AddressId")]
       public ICollection<Address>? Address { get; set; }
 
     }

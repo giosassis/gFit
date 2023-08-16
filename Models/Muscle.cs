@@ -1,5 +1,4 @@
-﻿using System;
-namespace gFit.Models
+﻿namespace gFit.Models
 {
 	public class Muscle
 	{
@@ -8,7 +7,6 @@ namespace gFit.Models
         public string? Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public ICollection<Exercise> Exercises { get; set; }
     }
 }
 
