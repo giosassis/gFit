@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using gFit.Services.Interfaces;
 using static gFit.Context.DTOs.TrainingSeries;
 
