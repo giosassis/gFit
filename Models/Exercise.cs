@@ -6,8 +6,6 @@ namespace gFit.Models
 	public class Exercise
 	{
         public Guid Id { get; set; }
-        [ForeignKey("ExerciseImageId")]
-        public Guid ExerciseImageId { get; set; }
         [ForeignKey("ExerciseCategoryId")]
         public Guid ExerciseCategoryId { get; set; }
         [ForeignKey("MuscleId")]
@@ -22,7 +20,12 @@ namespace gFit.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
+
+        // [ForeignKey("ExerciseImageId")]
+        public Guid? ExerciseImageId { get; set; }
         public ExerciseImage? ExerciseImage { get; set; }
+
+
         public ExerciseCategory? ExerciseCategory { get; set; }
         public Muscle? Muscle { get; set; }
         public Equipment? Equipment { get; set; }
