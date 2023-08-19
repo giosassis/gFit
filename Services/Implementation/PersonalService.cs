@@ -53,6 +53,7 @@ namespace gFit.Services.Implementation
             personal.UpdatedAt = DateTime.UtcNow;
 
             var createdPersonal = await _personalRepository.CreatePersonalAsync(personal);
+            System.Console.WriteLine(createdPersonal);
             return _mapper.Map<PersonalReadDTO>(createdPersonal);
         }
 

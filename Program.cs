@@ -18,6 +18,16 @@ builder.Services.AddControllersWithViews();
 // AutoMapper Config
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+// Cors
+
+builder.Services.AddCors(Options =>
+{
+    Options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 // Dependecy Injection Service and Repository
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IAddressService, AddressService>();
@@ -46,6 +56,8 @@ builder.Services.AddScoped<IPersonalService, PersonalService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 // Swagger Config 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -66,6 +78,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+app.UseCors();
 
 // Configuração da pipeline de requisição
 if (app.Environment.IsDevelopment())
