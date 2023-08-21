@@ -10,12 +10,10 @@ namespace gFit.Controllers
     public class PersonalController : ControllerBase
     {
         private readonly IPersonalService _personalService;
-        private readonly IEmailService _emailService;
 
-        public PersonalController(IPersonalService personalService, IEmailService emailService)
+        public PersonalController(IPersonalService personalService)
         {
             _personalService = personalService;
-            _emailService = emailService;
         }
 
         [HttpGet]
@@ -42,12 +40,6 @@ namespace gFit.Controllers
         public async Task<IActionResult> CreatePersonal(PersonalCreateDTO personalCreateDTO)
         {
             var createdPersonal = await _personalService.CreatePersonalAsync(personalCreateDTO);
-
-            var emailTo = createdPersonal.Email;
-            var emailSubject = "Bem-vindo ao nosso serviço!";
-            var emailMessage = "Olá, seja bem-vindo ao nosso serviço de personal trainer.";
-            await _emailService.SendEmailAsync(emailTo, emailSubject, emailMessage);
-
             return CreatedAtAction(nameof(GetPersonal), new { id = createdPersonal.Id }, createdPersonal);
         }
 

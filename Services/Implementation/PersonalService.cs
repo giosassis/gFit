@@ -13,12 +13,14 @@ namespace gFit.Services.Implementation
     public class PersonalService : IPersonalService
     {
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
         private readonly IPersonalRepository _personalRepository;
 
-        public PersonalService(IMapper mapper, IPersonalRepository personalRepository)
+        public PersonalService(IMapper mapper, IPersonalRepository personalRepository, IEmailService emailService)
         {
             _mapper = mapper;
             _personalRepository = personalRepository;
+            _emailService = emailService;
         }
 
         public async Task<IEnumerable<PersonalReadDTO>> GetAllPersonalsAsync()
@@ -52,8 +54,14 @@ namespace gFit.Services.Implementation
             personal.CreatedAt = DateTime.UtcNow;
             personal.UpdatedAt = DateTime.UtcNow;
 
+
             var createdPersonal = await _personalRepository.CreatePersonalAsync(personal);
-            System.Console.WriteLine(createdPersonal);
+            var emailTo = createdPersonal.Email;
+            var emailSubject = "Bem-vindo ao nosso serviço!";
+            var emailMessage = "$\"Olá {createdPersonal.Name},\\n\\nSeu cadastro como Personal Trainer foi realizado com sucesso!\";";
+            Console.Write("Email enviado");
+            await _emailService.SendEmailAsync(emailTo, emailSubject, emailMessage);
+
             return _mapper.Map<PersonalReadDTO>(createdPersonal);
         }
 
