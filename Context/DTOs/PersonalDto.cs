@@ -8,6 +8,8 @@ namespace gFit.Context.DTOs
             public Guid Id { get; set; }
             public string? Name { get; set; }
             public string? Email { get; set; }
+            public bool IsEmailConfirmed { get; set; }
+            public string? EmailConfirmationToken { get; set; }
             public string? Cref { get; set; }
             public string? Description { get; set; }
             public DateTime CreatedAt { get; set; }
@@ -29,6 +31,8 @@ namespace gFit.Context.DTOs
         {
             public string? Name { get; set; }
             public string? Email { get; set; }
+            public bool IsEmailConfirmed { get; set; }
+            public string? EmailConfirmationToken { get; set; }
             public string? Password { get; set; }
             public string? Description { get; set; }
             public DateTime UpdatedAt { get; set; }

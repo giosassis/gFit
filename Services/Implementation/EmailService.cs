@@ -2,27 +2,44 @@
 using Amazon.SimpleEmail;
 using Amazon.SimpleEmail.Model;
 
-public class EmailService : IEmailService
+namespace gFit.Services.Implementation
 {
-    private readonly string _awsAccessKeyId = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID");
-    private readonly string _awsSecretKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY");
-    private readonly string authorizedEmail = Environment.GetEnvironmentVariable("AuthorizedEmail");
-    private readonly RegionEndpoint _region = RegionEndpoint.USEast1; // Ajuste para a região correta
-
-    public async Task SendEmailAsync(string toEmail, string subject, string message)
+    public class EmailService : IEmailService
     {
-        var sendRequest = new SendEmailRequest
-        {
-            Source = authorizedEmail,
-            Destination = new Destination { ToAddresses = new List<string> { toEmail } },
-            Message = new Message
-            {
-                Subject = new Content(subject),
-                Body = new Body { Text = new Content(message) }
-            }
-        };
+        private readonly IConfiguration _configuration;
 
-        using var client = new AmazonSimpleEmailServiceClient(_awsAccessKeyId, _awsSecretKey, _region);
-        await client.SendEmailAsync(sendRequest);
+        public EmailService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        private readonly RegionEndpoint _region = RegionEndpoint.USEast1; // Ajuste para a região correta
+
+        public async Task SendEmailAsync(string toEmail, string subject, string message)
+        {
+            var awsAccessKeyId = _configuration["AwsAccessKeyId"];
+            var awsSecretKey = _configuration["AwsSecretKey"];
+            var authorizedEmail = _configuration["AuthorizedEmail"];
+            var sendRequest = new SendEmailRequest
+            {
+                Source = authorizedEmail,
+                Destination = new Destination { ToAddresses = new List<string> { toEmail } },
+                Message = new Message
+                {
+                    Subject = new Content(subject),
+                    Body = new Body
+                    {
+                        Html = new Content
+                        {
+                            Charset = "UTF-8",
+                            Data = message // Aqui, atribua o conteúdo HTML ao atributo Data
+                        }
+                    }
+                }
+            };
+
+            using var client = new AmazonSimpleEmailServiceClient(awsAccessKeyId, awsSecretKey, _region);
+            await client.SendEmailAsync(sendRequest);
+        }
     }
 }

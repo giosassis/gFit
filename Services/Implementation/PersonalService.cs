@@ -14,6 +14,7 @@ namespace gFit.Services.Implementation
     {
         private readonly IMapper _mapper;
         private readonly IPersonalRepository _personalRepository;
+     
 
         public PersonalService(IMapper mapper, IPersonalRepository personalRepository)
         {
@@ -33,6 +34,12 @@ namespace gFit.Services.Implementation
             return _mapper.Map<PersonalReadDTO>(personal);
         }
 
+        public async Task<PersonalReadDTO> GetPersonalByEmailAsync(string email)
+        {
+            var personal = await _personalRepository.GetPersonalByEmailAsync(email);
+            Console.WriteLine(personal);
+            return _mapper.Map<PersonalReadDTO>(personal);
+        }
         public async Task<PersonalReadDTO> CreatePersonalAsync(PersonalCreateDTO personalCreateDTO)
         {
             if (!IsValidEmail(personalCreateDTO.Email))
@@ -51,9 +58,10 @@ namespace gFit.Services.Implementation
             personal.Password = hashedPassword;
             personal.CreatedAt = DateTime.UtcNow;
             personal.UpdatedAt = DateTime.UtcNow;
+            personal.EmailConfirmationToken = Guid.NewGuid().ToString();
 
             var createdPersonal = await _personalRepository.CreatePersonalAsync(personal);
-            System.Console.WriteLine(createdPersonal);
+
             return _mapper.Map<PersonalReadDTO>(createdPersonal);
         }
 
@@ -65,6 +73,14 @@ namespace gFit.Services.Implementation
             {
                 throw new Exception("Personal not found");
             }
+
+            // Update the existingPersonal object with data from personalUpdateDTO
+            existingPersonal.Name = personalUpdateDTO.Name;
+            existingPersonal.Email = personalUpdateDTO.Email;
+            existingPersonal.Description = personalUpdateDTO.Description;
+            existingPersonal.IsEmailConfirmed = personalUpdateDTO.IsEmailConfirmed;
+            existingPersonal.EmailConfirmationToken = personalUpdateDTO.EmailConfirmationToken;
+            existingPersonal.UpdatedAt = personalUpdateDTO.UpdatedAt;
 
             var updatedPersonal = await _personalRepository.UpdatePersonalAsync(id, existingPersonal);
             return _mapper.Map<PersonalReadDTO>(updatedPersonal);
