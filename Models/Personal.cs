@@ -7,6 +7,8 @@ namespace gFit.Models
       public Guid Id { get; set; }
       public string? Name { get; set; }
       public string? Email { get; set; }
+      public bool IsEmailConfirmed { get; set; }
+      public string EmailConfirmationToken { get; set; } = Guid.NewGuid().ToString();
       public string? Password { get; set; }
       public string? Cref { get; set; }
       public string? Description { get; set; }

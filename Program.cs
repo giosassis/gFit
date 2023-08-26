@@ -58,6 +58,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 
+builder.Services.AddScoped<IEmailConfirmationService, EmailConfirmationService>();
+
 // Swagger Config 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -81,14 +83,12 @@ var app = builder.Build();
 
 app.UseCors();
 
-// Configuração da pipeline de requisição
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage(); // UseDeveloperExceptionPage() no ASP.NET 7
+    app.UseDeveloperExceptionPage(); 
 }
 else
 {
-    // Configurações para ambiente de produção
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
