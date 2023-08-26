@@ -10,11 +10,13 @@ namespace gFit.Services.Implementation
     {
         private readonly IPersonalService _personalService;
         private readonly IEmailService _emailService;
+        private readonly JwtService _jwtService;
 
-        public EmailConfirmationService(IPersonalService personalService, IEmailService emailService)
+        public EmailConfirmationService(IPersonalService personalService, IEmailService emailService, JwtService jwtService)
         {
             _personalService = personalService;
             _emailService = emailService;
+            _jwtService = jwtService;
         }
 
         public async Task<bool> VerifyEmailTokenAsync(string email, string token)

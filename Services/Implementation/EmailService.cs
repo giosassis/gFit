@@ -28,9 +28,7 @@ namespace gFit.Services.Implementation
                 Message = new Message
                 {
                     Subject = new Content(subject),
-<<<<<<< HEAD
-                    Body = new Body { Text = new Content(message) }
-=======
+
                     Body = new Body
                     {
                         Html = new Content
@@ -39,7 +37,6 @@ namespace gFit.Services.Implementation
                             Data = message // Aqui, atribua o conteúdo HTML ao atributo Data
                         }
                     }
->>>>>>> 7252bec (feat: send confirmation email service)
                 }
             };
 
