@@ -24,6 +24,11 @@ namespace gFit.Repositories.Implementation
             return await _context.Personal.FindAsync(id);
         }
 
+        public async Task<Personal> GetPersonalByEmailAsync(string email)
+        {
+            return await _context.Personal.FirstOrDefaultAsync(p => p.Email == email);
+        }
+
         public async Task<Personal> CreatePersonalAsync(Personal personal)
         {
             _context.Personal.Add(personal);
@@ -43,6 +48,9 @@ namespace gFit.Repositories.Implementation
             existingPersonal.Name = personal.Name;
             existingPersonal.Email = personal.Email;
             existingPersonal.Password = personal.Password;
+            existingPersonal.EmailConfirmationToken = null;
+            existingPersonal.IsEmailConfirmed = true;
+
             existingPersonal.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
