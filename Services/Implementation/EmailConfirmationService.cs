@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using gFit.Services.Interface;
 using Mustache;
 using System.Diagnostics;
@@ -69,6 +70,23 @@ namespace gFit.Services.Implementation
                 return false;
             }
         }
+=======
+﻿using System;
+using gFit.Services.Interface;
+using Mustache;
+
+namespace gFit.Services.Implementation
+{
+	public class EmailConfirmationService : IEmailConfirmationService
+	{
+        private readonly IEmailService _emailService;
+
+        public EmailConfirmationService(IEmailService emailService)
+        {
+            _emailService = emailService;
+        }
+
+>>>>>>> 003d765eabac9824d2c7ed685066ad4f1344f2e7
 
         public async Task SendConfirmationEmailAsync(string email, string confirmationLink, string personalName)
         {
@@ -84,7 +102,10 @@ namespace gFit.Services.Implementation
                 ConfirmationLink = confirmationLink
             });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 003d765eabac9824d2c7ed685066ad4f1344f2e7
             await _emailService.SendEmailAsync(email, subject, emailMessage);
         }
     }

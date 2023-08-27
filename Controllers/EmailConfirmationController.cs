@@ -89,11 +89,11 @@ namespace gFit.Controllers
 
                 if (personal.IsEmailConfirmed)
                 {
-                    return new RedirectResult("http://localhost:3000/confirmacao");  
+                    return new RedirectResult("http://localhost:3000/confirmacao");
                 }
 
                 personal.IsEmailConfirmed = true;
-                await _personalService.UpdatePersonalAsync(personal.Id, new PersonalUpdateDTO { IsEmailConfirmed = true });
+                await _personalService.UpdatePersonalAsync(personal.Id, new PersonalUpdateDTO { IsEmailConfirmed = true, Email = personal.Email, Name = personal.Name, Description = personal.Description });
 
                 return Ok("Email confirmed successfully.");
             }
