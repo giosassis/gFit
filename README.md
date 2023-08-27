@@ -1,123 +1,54 @@
-﻿# Nome da API
+﻿# gFit - Backend
 
-Descrição curta da API e seu propósito.
+Welcome to the documentation for the backend of the **gFit** project! This documentation provides information about the structure, configuration, and functionality of the application's backend.
 
-## Endpoints
+## About the Project
 
-### Endpoint 1
+**gFit** is an application developed for personal trainers and users who seek practicality when practicing physical activity, to have their training in the palm of their hand, anywhere, anytime.
 
-Descrição breve do que esse endpoint faz e quais parâmetros ele espera.
+## Technologies Used
 
-- **URL**: `/api/endpoint1`
-- **Método**: GET
-- **Parâmetros**:
-  - `param1`: Descrição do parâmetro 1.
-  - `param2`: Descrição do parâmetro 2.
+- ASP.NET Core 
+- Entity Framework Core 
+- JWT for authentication
+- AWS SES
 
-#### Exemplo de Requisição
+## Environment Setup
 
-GET /api/endpoint1?param1=valor1&param2=valor2
+1. Clone this repository to your local machine.
+2. Configure the database connection string in the `appsettings.json` file.
+3. Run migrations to create the database: `dotnet ef database update`.
+4. Run the application using the command: `dotnet run`.
 
+## Features
 
-#### Exemplo de Resposta
+- User Authentication
+- Email Confirmation
+- Password Reset
 
-```json
-{
-  "resultado": "valor",
-  "detalhes": "informações adicionais"
-}
+## Project Structure
 
+The project is structured as follows:
 
-Endpoint 2
-Descrição breve do que esse endpoint faz e quais parâmetros ele espera.
+- `Controllers`: Contains API controllers.
+- `Services`: Contains application services.
+- `Repositories`: Contains database access repositories.
+- `Context`: Contains the database context and entities.
+- `DTOs`: Contains Data Transfer Objects used to transfer information between layers.
+- `Utils`: Contains auxiliary utilities.
 
-URL: /api/endpoint2
-Método: POST
-Parâmetros:
-param1: Descrição do parâmetro 1.
-param2: Descrição do parâmetro 2.
-Exemplo de Requisição
+## Contribution
 
-POST /api/endpoint2
+Contributions are welcome! If you'd like to contribute to this project, follow these steps:
 
-{
-  "param1": "valor1",
-  "param2": "valor2"
-}
+1. Fork the repository.
+2. Create a new branch: `git checkout -b new-feature`.
+3. Make your changes and commit: `git commit -m 'Add new feature'`.
+4. Push to the branch: `git push origin new-feature`.
+5. Create a Pull Request.
 
-Exemplo de Resposta
+## Contact
 
-{
-  "mensagem": "Operação realizada com sucesso",
-  "detalhes": "informações adicionais"
-}
+If you have any questions or feedback, feel free to contact me at giovana.sant@hotmail.com.
 
-Claro, vou fornecer um exemplo básico de como você pode criar um README para documentar sua API. Lembre-se de personalizar as seções e os detalhes de acordo com sua aplicação específica.
-
-markdown
-Copy code
-# Nome da API
-
-Descrição curta da API e seu propósito.
-
-## Endpoints
-
-### Endpoint 1
-
-Descrição breve do que esse endpoint faz e quais parâmetros ele espera.
-
-- **URL**: `/api/endpoint1`
-- **Método**: GET
-- **Parâmetros**:
-  - `param1`: Descrição do parâmetro 1.
-  - `param2`: Descrição do parâmetro 2.
-
-#### Exemplo de Requisição
-
-GET /api/endpoint1?param1=valor1&param2=valor2
-
-bash
-Copy code
-
-#### Exemplo de Resposta
-
-```json
-{
-  "resultado": "valor",
-  "detalhes": "informações adicionais"
-}
-Endpoint 2
-Descrição breve do que esse endpoint faz e quais parâmetros ele espera.
-
-URL: /api/endpoint2
-Método: POST
-Parâmetros:
-param1: Descrição do parâmetro 1.
-param2: Descrição do parâmetro 2.
-Exemplo de Requisição
-bash
-Copy code
-POST /api/endpoint2
-
-{
-  "param1": "valor1",
-  "param2": "valor2"
-}
-Exemplo de Resposta
-json
-Copy code
-{
-  "mensagem": "Operação realizada com sucesso",
-  "detalhes": "informações adicionais"
-}
-
-Autenticação
-Descrição sobre como autenticar as chamadas para a API, se necessário.
-
-Erros
-Lista de códigos de erro possíveis e seus significados.
-
-400 Bad Request: A requisição possui parâmetros inválidos.
-401 Unauthorized: Falha na autenticação ou autorização.
-404 Not Found: O recurso solicitado não foi encontrado.
-500 Internal Server Error: Erro interno no servidor.
+---
