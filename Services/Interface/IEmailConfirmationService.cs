@@ -1,4 +1,4 @@
-﻿
+
 namespace gFit.Services.Interface
 {
     public interface IEmailConfirmationService

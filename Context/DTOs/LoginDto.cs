@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace gFit.Context.DTOs
 {
     public class LoginDto

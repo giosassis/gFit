@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using gFit.Context.DTOs;
 using gFit.Services.Interface;
 

@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using gFit.Context.DTOs;
 using gFit.Models;
 using System.Security.Cryptography;

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using gFit.Services.Interface;
 using static gFit.Context.DTOs.PersonalDto;
 

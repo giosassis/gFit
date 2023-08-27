@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace gFit.Utils
 {
 	public class AuthResult
