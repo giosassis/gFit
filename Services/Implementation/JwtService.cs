@@ -7,8 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace gFit.Services.Implementation
 {
-    public class JwtService : IJwtService 
-{
+    public class JwtService : IJwtService
+    {
         private readonly IConfiguration _configuration;
 
         public JwtService(IConfiguration configuration)
@@ -27,7 +27,7 @@ namespace gFit.Services.Implementation
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                 new Claim("email", email),
-                new Claim("action", "emailConfirmation")  
+                new Claim("action", "emailConfirmation")
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -49,9 +49,9 @@ namespace gFit.Services.Implementation
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,  
-                    ValidateAudience = false, 
-                    ClockSkew = TimeSpan.Zero  
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
                 }, out _);
 
                 return true;

@@ -12,13 +12,13 @@ namespace gFit.Controllers
         private readonly IJwtService _jwtService;
         private readonly IEmailConfirmationService _emailConfirmationService;
 
-        public PersonalController(IPersonalService personalService, IEmailConfirmationService emailConfirmationService, IJwtService jwtService)
+        public PersonalController(IPersonalService personalService, IJwtService jwtService, IEmailConfirmationService emailConfirmationService)
         {
             _personalService = personalService;
-            _emailConfirmationService = emailConfirmationService;
             _jwtService = jwtService;
-
+            _emailConfirmationService = emailConfirmationService;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetAllTrainingSeries()

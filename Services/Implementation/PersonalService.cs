@@ -61,13 +61,6 @@ namespace gFit.Services.Implementation
                 throw new ArgumentException("CREF already exists.");
             }
 
-            // Check if email exists 
-            var emailExists = await _personalRepository.CheckEmailExists(personalCreateDTO.Email);
-            if (emailExists)
-            {
-                throw new ArgumentException("CREF already exists.");
-
-            }
             string hashedPassword = PasswordHasher(personalCreateDTO.Password);
 
             var personal = _mapper.Map<Personal>(personalCreateDTO);
@@ -88,10 +81,7 @@ namespace gFit.Services.Implementation
                 throw new Exception("Personal not found");
             }
 
-            existingPersonal.Name = personalUpdateDTO.Name;
-            existingPersonal.Email = personalUpdateDTO.Email;
-            existingPersonal.Description = personalUpdateDTO.Description;
-            existingPersonal.IsEmailConfirmed = true;
+            existingPersonal.IsEmailConfirmed = personalUpdateDTO.IsEmailConfirmed;
             existingPersonal.UpdatedAt = personalUpdateDTO.UpdatedAt;
 
             var updatedPersonal = await _personalRepository.UpdatePersonalAsync(id, existingPersonal);
