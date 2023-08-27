@@ -13,15 +13,13 @@ namespace gFit.Services.Implementation
     public class PersonalService : IPersonalService
     {
         private readonly IMapper _mapper;
-        private readonly IEmailService _emailService;
         private readonly IPersonalRepository _personalRepository;
      
 
-        public PersonalService(IMapper mapper, IPersonalRepository personalRepository, IEmailService emailService)
+        public PersonalService(IMapper mapper, IPersonalRepository personalRepository)
         {
             _mapper = mapper;
             _personalRepository = personalRepository;
-            _emailService = emailService;
         }
 
         public async Task<IEnumerable<PersonalReadDTO>> GetAllPersonalsAsync()
@@ -44,35 +42,40 @@ namespace gFit.Services.Implementation
         }
         public async Task<PersonalReadDTO> CreatePersonalAsync(PersonalCreateDTO personalCreateDTO)
         {
+            // Validation of email format 
             if (!IsValidEmail(personalCreateDTO.Email))
             {
                 throw new ArgumentException("Invalid email format");
             }
 
+            // Security Requirements of password 
             if (!PasswordValidator.Validate(personalCreateDTO.Password))
             {
                 throw new ArgumentException("Password must meet security requirements.");
             }
 
+            // Check if CREF exists 
+            var crefExists = await _personalRepository.CheckCrefExists(personalCreateDTO.Cref);
+            if (crefExists)
+            {
+                throw new ArgumentException("CREF already exists.");
+            }
+
+            // Check if email exists 
+            var emailExists = await _personalRepository.CheckEmailExists(personalCreateDTO.Email);
+            if (emailExists)
+            {
+                throw new ArgumentException("CREF already exists.");
+
+            }
             string hashedPassword = PasswordHasher(personalCreateDTO.Password);
 
             var personal = _mapper.Map<Personal>(personalCreateDTO);
             personal.Password = hashedPassword;
             personal.CreatedAt = DateTime.UtcNow;
             personal.UpdatedAt = DateTime.UtcNow;
-            personal.EmailConfirmationToken = Guid.NewGuid().ToString();
-
 
             var createdPersonal = await _personalRepository.CreatePersonalAsync(personal);
-<<<<<<< HEAD
-            var emailTo = createdPersonal.Email;
-            var emailSubject = "Bem-vindo ao nosso serviço!";
-            var emailMessage = "$\"Olá {createdPersonal.Name},\\n\\nSeu cadastro como Personal Trainer foi realizado com sucesso!\";";
-            Console.Write("Email enviado");
-            await _emailService.SendEmailAsync(emailTo, emailSubject, emailMessage);
-=======
->>>>>>> 7252bec (feat: send confirmation email service)
-
             return _mapper.Map<PersonalReadDTO>(createdPersonal);
         }
 
@@ -85,12 +88,10 @@ namespace gFit.Services.Implementation
                 throw new Exception("Personal not found");
             }
 
-            // Update the existingPersonal object with data from personalUpdateDTO
             existingPersonal.Name = personalUpdateDTO.Name;
             existingPersonal.Email = personalUpdateDTO.Email;
             existingPersonal.Description = personalUpdateDTO.Description;
-            existingPersonal.IsEmailConfirmed = personalUpdateDTO.IsEmailConfirmed;
-            existingPersonal.EmailConfirmationToken = personalUpdateDTO.EmailConfirmationToken;
+            existingPersonal.IsEmailConfirmed = true;
             existingPersonal.UpdatedAt = personalUpdateDTO.UpdatedAt;
 
             var updatedPersonal = await _personalRepository.UpdatePersonalAsync(id, existingPersonal);
