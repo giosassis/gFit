@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using gFit.Services.Interface;
-using gFit.Services.Implementation;
 using static gFit.Context.DTOs.PersonalDto;
 
 namespace gFit.Controllers

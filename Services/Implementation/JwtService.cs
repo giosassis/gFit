@@ -61,6 +61,55 @@ namespace gFit.Services.Implementation
                 return false;
             }
         }
-    }
 
+<<<<<<< Updated upstream
 }
+=======
+        public string GeneratePasswordResetToken(string email)
+        {
+            var secretKey = _configuration["JwtSettings:SecretKey"];
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(secretKey);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+            new Claim("email", email),
+            new Claim("action", "passwordReset")
+                }),
+                Expires = DateTime.UtcNow.AddHours(2),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+        public bool ValidatePasswordResetToken(string token)
+        {
+            var secretKey = _configuration["JwtSettings:SecretKey"];
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(secretKey);
+
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                }, out _);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+    }
+}
+>>>>>>> Stashed changes
