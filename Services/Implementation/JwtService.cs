@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -7,8 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace gFit.Services.Implementation
 {
-    public class JwtService : IJwtService
-    {
+    public class JwtService : IJwtService 
+{
         private readonly IConfiguration _configuration;
 
         public JwtService(IConfiguration configuration)
@@ -27,7 +27,7 @@ namespace gFit.Services.Implementation
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                 new Claim("email", email),
-                new Claim("action", "emailConfirmation")
+                new Claim("action", "emailConfirmation")  
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -38,6 +38,52 @@ namespace gFit.Services.Implementation
         }
 
         public bool ValidateEmailConfirmationToken(string token)
+        {
+            var secretKey = _configuration["JwtSettings:SecretKey"];
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(secretKey);
+
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,  
+                    ValidateAudience = false, 
+                    ClockSkew = TimeSpan.Zero  
+                }, out _);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public string GeneratePasswordResetToken(string email)
+        {
+            var secretKey = _configuration["JwtSettings:SecretKey"];
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(secretKey);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+            new Claim("email", email),
+            new Claim("action", "passwordReset")
+                }),
+                Expires = DateTime.UtcNow.AddHours(2),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+        public bool ValidatePasswordResetToken(string token)
         {
             var secretKey = _configuration["JwtSettings:SecretKey"];
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -62,5 +108,5 @@ namespace gFit.Services.Implementation
             }
         }
     }
-
 }
+

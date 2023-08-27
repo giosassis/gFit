@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using gFit.Utils;
 using gFit.Context.DTOs;
 
@@ -8,8 +8,8 @@ namespace gFit.Services.Interface
 	{
         Task<AuthResult> LoginAsync(LoginDto loginDTO);
         //Task<AuthResult> LogoutAsync();
-        //Task<AuthResult> RequestPasswordResetAsync(string email);
-        //Task<AuthResult> ResetPasswordAsync(string email, string token, string newPassword);
+        Task<AuthResult> RequestPasswordResetAsync(EmailDto emailDto);
+        Task<AuthResult> ResetPasswordAsync(ResetPasswordDto resetPasswordDto);
     }
 }
 
