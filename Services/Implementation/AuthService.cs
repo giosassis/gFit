@@ -13,13 +13,11 @@ namespace gFit.Services.Implementation
 	public class AuthService : IAuthService
 	{
         private readonly IConfiguration _configuration;
-        private readonly IPersonalService _personalService;
         private readonly IPersonalRepository _personalRepository;
         private readonly IJwtService _jwtService;
 
-        public AuthService(IPersonalService personalService, IJwtService jwtService, IPersonalRepository personalRepository, IConfiguration configuration)
+        public AuthService(IJwtService jwtService, IPersonalRepository personalRepository, IConfiguration configuration)
         {
-            _personalService = personalService;
             _jwtService = jwtService;
             _personalRepository = personalRepository;
             _configuration = configuration;
