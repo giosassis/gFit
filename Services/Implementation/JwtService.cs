@@ -62,9 +62,6 @@ namespace gFit.Services.Implementation
             }
         }
 
-<<<<<<< Updated upstream
-}
-=======
         public string GeneratePasswordResetToken(string email)
         {
             var secretKey = _configuration["JwtSettings:SecretKey"];
@@ -112,4 +109,3 @@ namespace gFit.Services.Implementation
         }
     }
 }
->>>>>>> Stashed changes

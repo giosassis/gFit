@@ -43,7 +43,7 @@ namespace gFit.Controllers
 
                 if (personal.IsEmailConfirmed)
                 {
-                    return new RedirectResult("http://localhost:3000/confirmacao");  
+                    return new RedirectResult("http://localhost:3000/confirmacao");
                 }
 
                 personal.IsEmailConfirmed = true;

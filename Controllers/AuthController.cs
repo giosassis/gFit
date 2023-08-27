@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using gFit.Context.DTOs;
 using gFit.Services.Interface;
-using System.Threading.Tasks;
 
 namespace gFit.Controllers
 {
