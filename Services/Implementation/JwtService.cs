@@ -1,37 +1,35 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using gFit.Services.Interface;
+using Microsoft.IdentityModel.Tokens;
 
 namespace gFit.Services.Implementation
 {
-    public class JwtService
-    {
-        private readonly string _secretKey;
-        private readonly string _issuer;
-        private readonly string _audience;
+    public class JwtService : IJwtService 
+{
+        private readonly IConfiguration _configuration;
 
         public JwtService(IConfiguration configuration)
         {
-            _secretKey = configuration["JwtSettings:SecretKey"];
-            _issuer = configuration["JwtSettings:Issuer"];
-            _audience = configuration["JwtSettings:Audience"];
+            _configuration = configuration;
         }
 
-        public string GenerateToken(string email)
+        public string GenerateEmailConfirmationToken(string email)
         {
+            var secretKey = _configuration["JwtSettings:SecretKey"];
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_secretKey);
+            var key = Encoding.ASCII.GetBytes(secretKey);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Email, email)
+                new Claim("email", email),
+                new Claim("action", "emailConfirmation")  
                 }),
-                Expires = DateTime.UtcNow.AddHours(24), // Define o tempo de expiração
-                Issuer = _issuer,
-                Audience = _audience,
+                Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -39,32 +37,30 @@ namespace gFit.Services.Implementation
             return tokenHandler.WriteToken(token);
         }
 
-        public ClaimsPrincipal ValidateToken(string token)
+        public bool ValidateEmailConfirmationToken(string token)
         {
+            var secretKey = _configuration["JwtSettings:SecretKey"];
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_secretKey);
-
-            var validationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = true,
-                ValidIssuer = _issuer,
-                ValidateAudience = true,
-                ValidAudience = _audience,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
+            var key = Encoding.ASCII.GetBytes(secretKey);
 
             try
             {
-                var principal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
-                return principal;
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,  
+                    ValidateAudience = false, 
+                    ClockSkew = TimeSpan.Zero  
+                }, out _);
+
+                return true;
             }
             catch
             {
-                return null;
+                return false;
             }
         }
     }
+
 }

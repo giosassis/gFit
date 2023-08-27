@@ -10,9 +10,9 @@ namespace gFit.Services.Implementation
     {
         private readonly IPersonalService _personalService;
         private readonly IEmailService _emailService;
-        private readonly JwtService _jwtService;
+        private readonly IJwtService _jwtService;
 
-        public EmailConfirmationService(IPersonalService personalService, IEmailService emailService, JwtService jwtService)
+        public EmailConfirmationService(IPersonalService personalService, IEmailService emailService, IJwtService jwtService)
         {
             _personalService = personalService;
             _emailService = emailService;
@@ -21,41 +21,34 @@ namespace gFit.Services.Implementation
 
         public async Task<bool> VerifyEmailTokenAsync(string email, string token)
         {
-            Console.WriteLine("ConfirmEmailAsync method called.");
             var personal = await _personalService.GetPersonalByEmailAsync(email);
             if (personal == null || personal.IsEmailConfirmed)
             {
                 return false;
             }
 
-            Console.WriteLine($"Stored Token: {personal.EmailConfirmationToken}");
-            Console.WriteLine($"Received Token: {token}");
-
-            return string.Equals(personal.EmailConfirmationToken.Trim(), token.Trim(), StringComparison.OrdinalIgnoreCase);
+            return _jwtService.ValidateEmailConfirmationToken(token);
         }
 
         public async Task<bool> ConfirmEmailAsync(string email, string token)
         {
             try
             {
-                Console.WriteLine("ConfirmEmailAsync method called.");
                 var personal = await _personalService.GetPersonalByEmailAsync(email);
 
-                if (personal == null || personal.IsEmailConfirmed || !string.Equals(personal.EmailConfirmationToken, token, StringComparison.OrdinalIgnoreCase))
+                if (personal == null || personal.IsEmailConfirmed || !_jwtService.ValidateEmailConfirmationToken(token))
                 {
                     Console.WriteLine("Confirmation failed due to invalid token or already confirmed email.");
                     return false;
                 }
 
                 personal.IsEmailConfirmed = true;
-                personal.EmailConfirmationToken = null;
 
                 var updatedPersonal = await _personalService.UpdatePersonalAsync(personal.Id, new PersonalUpdateDTO
                 {
                     Name = personal.Name,
                     Email = personal.Email,
                     IsEmailConfirmed = true,
-                    EmailConfirmationToken = null,
                     Description = personal.Description,
                     UpdatedAt = DateTime.UtcNow
                 });
@@ -85,7 +78,6 @@ namespace gFit.Services.Implementation
                 PersonalName = personalName,
                 ConfirmationLink = confirmationLink
             });
-
 
             await _emailService.SendEmailAsync(email, subject, emailMessage);
         }

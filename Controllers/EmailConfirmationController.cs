@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using gFit.Services.Interface;
+using gFit.Services.Implementation;
+using static gFit.Context.DTOs.PersonalDto;
 
 namespace gFit.Controllers
 {
@@ -7,46 +9,53 @@ namespace gFit.Controllers
     [Route("api/[controller]")]
     public class EmailConfirmationController : ControllerBase
     {
-        private readonly IEmailConfirmationService _emailConfirmationService;
+        private readonly IPersonalService _personalService;
+        private readonly IJwtService _jwtService;
 
-        public EmailConfirmationController(IEmailConfirmationService emailConfirmationService)
+        public EmailConfirmationController(IPersonalService personalService, IJwtService jwtService)
         {
-            _emailConfirmationService = emailConfirmationService;
-        }
-
-        [HttpGet("verify")]
-        public async Task<IActionResult> VerifyEmailToken([FromQuery] string email, [FromQuery] string token)
-        {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(token))
-            {
-                return BadRequest("Email and token are required.");
-            }
-
-            var isTokenValid = await _emailConfirmationService.VerifyEmailTokenAsync(email, token);
-
-            return Ok(new { IsTokenValid = isTokenValid });
+            _personalService = personalService;
+            _jwtService = jwtService;
         }
 
         [HttpGet("confirm")]
-        public async Task<IActionResult> ConfirmEmail([FromQuery] string email, [FromQuery] string token)
+        public async Task<IActionResult> ConfirmEmail(string email, string token)
         {
-            Console.WriteLine("ConfirmEmailAsync method called.");
-
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(token))
+            try
             {
-                return BadRequest("Email and token are required.");
+                if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(token))
+                {
+                    return BadRequest("Email and token are required.");
+                }
+
+                var isValidToken = _jwtService.ValidateEmailConfirmationToken(token);
+
+                if (!isValidToken)
+                {
+                    return BadRequest("Invalid token.");
+                }
+
+                var personal = await _personalService.GetPersonalByEmailAsync(email);
+
+                if (personal == null)
+                {
+                    return NotFound();
+                }
+
+                if (personal.IsEmailConfirmed)
+                {
+                    return new RedirectResult("http://localhost:3000/confirmacao");  
+                }
+
+                personal.IsEmailConfirmed = true;
+                await _personalService.UpdatePersonalAsync(personal.Id, new PersonalUpdateDTO { IsEmailConfirmed = true });
+
+                return Ok("Email confirmed successfully.");
             }
-
-            var isConfirmed = await _emailConfirmationService.ConfirmEmailAsync(email, token);
-
-            if (isConfirmed)
+            catch (Exception ex)
             {
-                // Redirecionar para a página de confirmação bem-sucedida
-                return new RedirectResult("http://localhost:3000/confirmacao");
+                return BadRequest("An error occurred while confirming the email.");
             }
-
-            // Retornar algo caso a confirmação falhe
-            return BadRequest("Email confirmation failed.");
         }
     }
 }
