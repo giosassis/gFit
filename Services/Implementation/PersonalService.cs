@@ -67,13 +67,8 @@ namespace gFit.Services.Implementation
             personal.Password = hashedPassword;
             personal.CreatedAt = DateTime.UtcNow;
             personal.UpdatedAt = DateTime.UtcNow;
-            personal.EmailConfirmationToken = Guid.NewGuid().ToString();
-
             var createdPersonal = await _personalRepository.CreatePersonalAsync(personal);
-<<<<<<< HEAD
 
-=======
->>>>>>> de58bf75660d62e8496836152c1eea71d4844232
             return _mapper.Map<PersonalReadDTO>(createdPersonal);
         }
 
@@ -86,23 +81,7 @@ namespace gFit.Services.Implementation
                 throw new Exception("Personal not found");
             }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-            // Update the existingPersonal object with data from personalUpdateDTO
-            existingPersonal.Name = personalUpdateDTO.Name;
-            existingPersonal.Email = personalUpdateDTO.Email;
-            existingPersonal.Description = personalUpdateDTO.Description;
             existingPersonal.IsEmailConfirmed = personalUpdateDTO.IsEmailConfirmed;
-            existingPersonal.EmailConfirmationToken = personalUpdateDTO.EmailConfirmationToken;
-=======
-            existingPersonal.Name = personalUpdateDTO.Name;
-            existingPersonal.Email = personalUpdateDTO.Email;
-            existingPersonal.Description = personalUpdateDTO.Description;
-            existingPersonal.IsEmailConfirmed = true;
->>>>>>> de58bf75660d62e8496836152c1eea71d4844232
-=======
-            existingPersonal.IsEmailConfirmed = personalUpdateDTO.IsEmailConfirmed;
->>>>>>> 003d765eabac9824d2c7ed685066ad4f1344f2e7
             existingPersonal.UpdatedAt = personalUpdateDTO.UpdatedAt;
 
             var updatedPersonal = await _personalRepository.UpdatePersonalAsync(id, existingPersonal);

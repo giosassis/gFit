@@ -1,10 +1,5 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using Mustache;
 using gFit.Services.Interface;
-using gFit.Utils;
-using Microsoft.Extensions.Configuration;
 
 namespace gFit.Services.Implementation
 {

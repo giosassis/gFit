@@ -1,5 +1,4 @@
 ﻿using Amazon;
-using System;
 using Amazon.SimpleEmail;
 using Amazon.SimpleEmail.Model;
 
@@ -14,7 +13,7 @@ namespace gFit.Services.Implementation
             _configuration = configuration;
         }
 
-        private readonly RegionEndpoint _region = RegionEndpoint.USEast1; // Ajuste para a região correta
+        private readonly RegionEndpoint _region = RegionEndpoint.USEast1;
 
         public async Task SendEmailAsync(string toEmail, string subject, string message)
         {
@@ -28,16 +27,13 @@ namespace gFit.Services.Implementation
                 Message = new Message
                 {
                     Subject = new Content(subject),
-<<<<<<< HEAD
-=======
 
->>>>>>> de58bf75660d62e8496836152c1eea71d4844232
                     Body = new Body
                     {
                         Html = new Content
                         {
                             Charset = "UTF-8",
-                            Data = message // Aqui, atribua o conteúdo HTML ao atributo Data
+                            Data = message
                         }
                     }
                 }
