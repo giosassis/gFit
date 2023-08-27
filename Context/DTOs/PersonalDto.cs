@@ -9,7 +9,10 @@ namespace gFit.Context.DTOs
             public string? Name { get; set; }
             public string? Email { get; set; }
             public bool IsEmailConfirmed { get; set; }
+<<<<<<< HEAD
             public string? EmailConfirmationToken { get; set; }
+=======
+>>>>>>> de58bf75660d62e8496836152c1eea71d4844232
             public string? Cref { get; set; }
             public string? Description { get; set; }
             public DateTime CreatedAt { get; set; }
@@ -32,7 +35,10 @@ namespace gFit.Context.DTOs
             public string? Name { get; set; }
             public string? Email { get; set; }
             public bool IsEmailConfirmed { get; set; }
+<<<<<<< HEAD
             public string? EmailConfirmationToken { get; set; }
+=======
+>>>>>>> de58bf75660d62e8496836152c1eea71d4844232
             public string? Password { get; set; }
             public string? Description { get; set; }
             public DateTime UpdatedAt { get; set; }

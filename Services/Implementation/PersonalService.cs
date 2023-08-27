@@ -42,16 +42,32 @@ namespace gFit.Services.Implementation
         }
         public async Task<PersonalReadDTO> CreatePersonalAsync(PersonalCreateDTO personalCreateDTO)
         {
+            // Validation of email format 
             if (!IsValidEmail(personalCreateDTO.Email))
             {
                 throw new ArgumentException("Invalid email format");
             }
 
+            // Security Requirements of password 
             if (!PasswordValidator.Validate(personalCreateDTO.Password))
             {
                 throw new ArgumentException("Password must meet security requirements.");
             }
 
+            // Check if CREF exists 
+            var crefExists = await _personalRepository.CheckCrefExists(personalCreateDTO.Cref);
+            if (crefExists)
+            {
+                throw new ArgumentException("CREF already exists.");
+            }
+
+            // Check if email exists 
+            var emailExists = await _personalRepository.CheckEmailExists(personalCreateDTO.Email);
+            if (emailExists)
+            {
+                throw new ArgumentException("CREF already exists.");
+
+            }
             string hashedPassword = PasswordHasher(personalCreateDTO.Password);
 
             var personal = _mapper.Map<Personal>(personalCreateDTO);
@@ -61,7 +77,10 @@ namespace gFit.Services.Implementation
             personal.EmailConfirmationToken = Guid.NewGuid().ToString();
 
             var createdPersonal = await _personalRepository.CreatePersonalAsync(personal);
+<<<<<<< HEAD
 
+=======
+>>>>>>> de58bf75660d62e8496836152c1eea71d4844232
             return _mapper.Map<PersonalReadDTO>(createdPersonal);
         }
 
@@ -74,12 +93,19 @@ namespace gFit.Services.Implementation
                 throw new Exception("Personal not found");
             }
 
+<<<<<<< HEAD
             // Update the existingPersonal object with data from personalUpdateDTO
             existingPersonal.Name = personalUpdateDTO.Name;
             existingPersonal.Email = personalUpdateDTO.Email;
             existingPersonal.Description = personalUpdateDTO.Description;
             existingPersonal.IsEmailConfirmed = personalUpdateDTO.IsEmailConfirmed;
             existingPersonal.EmailConfirmationToken = personalUpdateDTO.EmailConfirmationToken;
+=======
+            existingPersonal.Name = personalUpdateDTO.Name;
+            existingPersonal.Email = personalUpdateDTO.Email;
+            existingPersonal.Description = personalUpdateDTO.Description;
+            existingPersonal.IsEmailConfirmed = true;
+>>>>>>> de58bf75660d62e8496836152c1eea71d4844232
             existingPersonal.UpdatedAt = personalUpdateDTO.UpdatedAt;
 
             var updatedPersonal = await _personalRepository.UpdatePersonalAsync(id, existingPersonal);

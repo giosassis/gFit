@@ -60,6 +60,11 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddScoped<IEmailConfirmationService, EmailConfirmationService>();
 
+<<<<<<< HEAD
+=======
+builder.Services.AddScoped<IJwtService, JwtService>();
+
+>>>>>>> de58bf75660d62e8496836152c1eea71d4844232
 // Swagger Config 
 builder.Services.AddSwaggerGen(c =>
 {

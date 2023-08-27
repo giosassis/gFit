@@ -1,4 +1,5 @@
 ﻿using Amazon;
+using System;
 using Amazon.SimpleEmail;
 using Amazon.SimpleEmail.Model;
 
@@ -27,6 +28,10 @@ namespace gFit.Services.Implementation
                 Message = new Message
                 {
                     Subject = new Content(subject),
+<<<<<<< HEAD
+=======
+
+>>>>>>> de58bf75660d62e8496836152c1eea71d4844232
                     Body = new Body
                     {
                         Html = new Content
